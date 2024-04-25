@@ -37,5 +37,5 @@ jobs:
         PROGRAM1-PY_RESULTS: "${{steps.a-python1-test.outputs.result}}"
         # PROGRAM2-PY_RESULTS: "${{steps.a-python2-test.outputs.result}}"
       with:
-        runners: "a-python1-test"
+        runners: a-python1-test
 
