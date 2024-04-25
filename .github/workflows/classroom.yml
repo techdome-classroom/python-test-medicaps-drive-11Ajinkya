@@ -1,3 +1,4 @@
+
 name: Autograding Tests
 'on':
 - push
@@ -14,28 +15,28 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: A python1 test
-      id: a-python1-test
+    - name: program1.py
+      id: program1-py
       uses: education/autograding-command-grader@v1
       with:
-        test-name: test1.py
+        test-name: program1.py
         setup-command: sudo -H pip3 install pytest
-        command: python test1.py
+        command: pytest run test1
         timeout: 10
         max-score: 20
-          
-    # - name: program2.py
-    #   id: program2-py
-    #   uses: education/autograding-python-grader@v1
-    #   with:
-    #     timeout: 10
-    #     max-score: 20
-    #     setup-command: sudo -H pip3 install pytest
+    - name: program2.py
+      id: program2-py
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: program2.py
+        setup-command: sudo -H pip3 install pytest
+        command: pytest run test2
+        timeout: 10
+        max-score: 20
     - name: Autograding Reporter
       uses: education/autograding-grading-reporter@v1
       env:
-        PROGRAM1-PY_RESULTS: "${{steps.a-python1-test.outputs.result}}"
-        # PROGRAM2-PY_RESULTS: "${{steps.a-python2-test.outputs.result}}"
+        PROGRAM1-JS_RESULTS: "${{steps.program1-py.outputs.result}}"
+        PROGRAM2-JS_RESULTS: "${{steps.program2-py.outputs.result}}"
       with:
-        runners: a-python1-test
-
+        runners: program1-py,program2-py
